@@ -1,0 +1,34 @@
+{
+    "name": "yamux-js",
+    "version": "0.0.1",
+    "main": "src/index.ts",
+    "license": "MIT",
+    "repository": {
+        "url": "https://github.com/th-ch/yamux-js",
+        "type": "git"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.2.14",
+        "@types/mocha": "^8.0.3",
+        "@types/node": "^14.11.8",
+        "chai": "^4.2.0",
+        "mocha": "^8.2.0",
+        "prettier": "^2.1.2",
+        "ts-node": "^9.0.0",
+        "typescript": "^4.0.3"
+    },
+    "scripts": {
+        "build": "yarn clean && tsc",
+        "clean": "rm -rf lib",
+        "format": "yarn prettier --write .",
+        "format:check": "yarn prettier .",
+        "test": "mocha --require ts-node/register --color --recursive --extension ts",
+        "test:watch": "yarn test --watch"
+    },
+    "publishConfig": {
+        "main": "lib/index"
+    },
+    "files": [
+        "lib"
+    ]
+}
