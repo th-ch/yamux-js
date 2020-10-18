@@ -1,5 +1,8 @@
 # Yamux-js
 
+[![Build status](https://img.shields.io/github/workflow/status/th-ch/yamux-js/Node.js%20CI)](https://github.com/th-ch/yamux-js)
+[![GitHub license](https://img.shields.io/github/license/th-ch/yamux-js.svg)](https://github.com/th-ch/yamux-js/blob/master/LICENSE)
+
 Yamux-js (Yet another Multiplexer) is a Node.js (TypeScript/JavaScript) port of the multiplexing library for Golang made by HashiCorp: https://github.com/hashicorp/yamux. The 2 libraries are fully interoperable (you can have a client in Golang and a server in JS, or the other way around).
 
 _From https://github.com/hashicorp/yamux:_
