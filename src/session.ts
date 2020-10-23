@@ -166,7 +166,7 @@ export class Session extends Transform {
         });
 
         if (error) {
-            this.emit('error', error)
+            this.emit('error', error);
         }
         this.end();
     }
