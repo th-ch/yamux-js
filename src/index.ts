@@ -1,4 +1,5 @@
-import {Client} from './client';
-import {Server} from './server';
+import { Client } from './client';
+import { Config } from './mux'
+import { Server } from './server';
 
-export {Client, Server};
+export {Config, Client, Server};

@@ -16,7 +16,7 @@ export class Session extends Transform {
     private nextStreamID: number;
 
     // config holds our configuration
-    public config: Config;
+    public config: typeof defaultConfig;
 
     // pings is used to track inflight pings
     private pings: Map<number, NodeJS.Timeout> = new Map();
@@ -43,7 +43,10 @@ export class Session extends Transform {
             this.nextStreamID = 2;
         }
         this.onStream = onStream;
-        this.config = config;
+        this.config = {
+            ...defaultConfig,
+            ...config,
+        };
 
         if (this.config.enableKeepAlive) {
             this.keepalive();
