@@ -277,7 +277,9 @@ export class Session extends Transform {
         }
 
         const toSend = Buffer.concat(buffers);
-        this.push(toSend);
+        if (!this.writableEnded) {
+            this.push(toSend);
+        }
     }
 
     private handleGoAway(hdr: Header) {
