@@ -35,7 +35,7 @@ export class Session extends Transform {
     // Current header from data received
     private currentHeader?: Header;
 
-    constructor(client: boolean, config = defaultConfig, onStream?: (duplex: Duplex) => void) {
+    constructor(client: boolean, config?: Config, onStream?: (duplex: Duplex) => void) {
         super();
         if (client) {
             this.nextStreamID = 1;
