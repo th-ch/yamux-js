@@ -1,5 +1,6 @@
 # Yamux-js
 
+[![npm version](https://badge.fury.io/js/yamux-js.svg)](https://www.npmjs.com/package/yamux-js)
 [![Build status](https://img.shields.io/github/workflow/status/th-ch/yamux-js/Node.js%20CI)](https://github.com/th-ch/yamux-js)
 [![GitHub license](https://img.shields.io/github/license/th-ch/yamux-js.svg)](https://github.com/th-ch/yamux-js/blob/master/LICENSE)
 
@@ -22,6 +23,20 @@ Yamux features include:
     -   Enables persistent connections over a load balancer
 -   Efficient
     -   Enables thousands of logical streams with low overhead
+
+## Installation
+
+Install Yamux-js using [`yarn`](https://yarnpkg.com/en/package/jest):
+
+```bash
+yarn add yamux-js
+```
+
+Or [`npm`](https://www.npmjs.com/package/yamux-js):
+
+```bash
+npm install --save yamux-js
+```
 
 ## Usage
 
