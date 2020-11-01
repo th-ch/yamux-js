@@ -28,6 +28,17 @@
     "publishConfig": {
         "main": "lib/index"
     },
+    "keywords": [
+        "yamux",
+        "hashicorp",
+        "multiplex",
+        "multiplexer",
+        "multiplexing",
+        "streams",
+        "typescript",
+        "javascript",
+        "interleave"
+    ],
     "files": [
         "lib"
     ]
