@@ -22,6 +22,7 @@
         "clean": "rm -rf lib",
         "format": "yarn prettier --write src",
         "format:check": "yarn prettier --check src",
+        "prepare": "yarn format:check && yarn build",
         "test": "mocha --require ts-node/register --color --recursive --extension ts",
         "test:watch": "yarn test --watch"
     },
