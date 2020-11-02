@@ -1,7 +1,7 @@
 {
     "name": "yamux-js",
     "version": "0.0.1",
-    "main": "src/index.ts",
+    "main": "lib/index",
     "license": "MIT",
     "repository": {
         "url": "https://github.com/th-ch/yamux-js",
@@ -25,9 +25,6 @@
         "prepare": "yarn format:check && yarn build",
         "test": "mocha --require ts-node/register --color --recursive --extension ts",
         "test:watch": "yarn test --watch"
-    },
-    "publishConfig": {
-        "main": "lib/index"
     },
     "keywords": [
         "yamux",
