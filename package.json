@@ -20,8 +20,8 @@
     "scripts": {
         "build": "yarn clean && tsc",
         "clean": "rm -rf lib",
-        "format": "yarn prettier --write .",
-        "format:check": "yarn prettier .",
+        "format": "yarn prettier --write src",
+        "format:check": "yarn prettier --check src",
         "test": "mocha --require ts-node/register --color --recursive --extension ts",
         "test:watch": "yarn test --watch"
     },
