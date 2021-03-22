@@ -1,0 +1,13 @@
+# CHANGELOG
+
+## 0.0.3
+
+-   Export stream class (https://github.com/th-ch/yamux-js/pull/1)
+
+## 0.0.2
+
+-   Add prepare script
+
+## 0.0.1
+
+-   Initial version
