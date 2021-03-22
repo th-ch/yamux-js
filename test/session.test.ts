@@ -2,6 +2,8 @@ import {Duplex} from 'stream';
 
 import {expect} from 'chai';
 
+import {FLAGS, TYPES, VERSION} from '../src/constants';
+import {Header} from '../src/header';
 import {Session} from '../src/session';
 import {defaultConfig} from '../src/mux';
 
@@ -173,6 +175,33 @@ describe('Server session', () => {
             // Send the message and wait to get it back
             stream!.write(message);
         }
+    });
+
+    it('handles correctly window updates', (done) => {
+        let hasReceivedMessageBeforeWindowUpdate = false;
+
+        const {client} = getServerAndClient(testConfig, testConfig, (stream) => {
+            stream.on('data', (data) => {
+                const received = data.toString();
+
+                if (!hasReceivedMessageBeforeWindowUpdate) {
+                    expect(received).to.equal('Data before window update');
+                    hasReceivedMessageBeforeWindowUpdate = true;
+                } else {
+                    expect(received).to.equal('Data after window update');
+                    done();
+                }
+            });
+        });
+
+        const stream = client.open();
+        stream.write('Data before window update');
+
+        // Update the window (size += 1)
+        const hdr = new Header(VERSION, TYPES.WindowUpdate, FLAGS.ACK, stream.ID(), 1);
+        client.send(hdr);
+
+        stream.write('Data after window update');
     });
 });
 
