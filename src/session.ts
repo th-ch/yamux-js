@@ -76,7 +76,6 @@ export class Session extends Transform {
 
         switch (this.currentHeader.type) {
             case TYPES.Data:
-            case TYPES.WindowUpdate:
                 // we have enough data to handle the packet
                 if (packet.length >= expectedLength) {
                     var rest = packet.slice(expectedLength);
@@ -89,6 +88,10 @@ export class Session extends Transform {
                         return this._transform(rest, encoding, cb);
                     }
                 }
+                break;
+            case TYPES.WindowUpdate:
+                this.handleStreamMessage(this.currentHeader, packet, encoding);
+                this.currentHeader = undefined;
                 break;
             case TYPES.Ping:
                 this.handlePing(this.currentHeader);
