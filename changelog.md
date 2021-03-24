@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.4
+
+-  Fix window update (https://github.com/th-ch/yamux-js/pull/2)
+
 ## 0.0.3
 
 -   Export stream class (https://github.com/th-ch/yamux-js/pull/1)
