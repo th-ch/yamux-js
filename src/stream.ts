@@ -5,7 +5,6 @@ import {Header} from './header';
 import {Session} from './session';
 
 export class Stream extends Duplex {
-    private HEADER_SIZE = 12;
     private recvWindow: number;
     private sendWindow: number;
     private id: number;
@@ -61,8 +60,8 @@ export class Stream extends Duplex {
                 const buffers = [sendHdr.encode(), chunk];
                 const packet = Buffer.concat(buffers);
 
-                const rest = packet.slice(packetLength + this.HEADER_SIZE);
-                const packetToSend = packet.slice(0, packetLength + this.HEADER_SIZE);
+                const rest = packet.slice(packetLength + Header.LENGTH);
+                const packetToSend = packet.slice(0, packetLength + Header.LENGTH);
                 this.sendWindow -= packetLength;
 
                 const writeTimeout = setTimeout(() => {
