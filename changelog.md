@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.6
+
+-   Fix window size handling in send window (https://github.com/th-ch/yamux-js/pull/4)
+
 ## 0.0.5
 
 -   Fix prototype pollution in y18n (https://github.com/th-ch/yamux-js/pull/3)
