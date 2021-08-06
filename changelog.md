@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.7
+
+-   Bump glob-parent (CVE-2020-28469)
+
 ## 0.0.6
 
 -   Fix window size handling in send window (https://github.com/th-ch/yamux-js/pull/4)
