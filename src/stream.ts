@@ -35,7 +35,7 @@ export class Stream extends Duplex {
                 this.recvWindow,
                 size
             );
-            this.emit('error', ERRORS.errRecvWindowExceeded);
+            this.emit('error', new Error(ERRORS.errRecvWindowExceeded));
         }
     }
 
@@ -44,10 +44,10 @@ export class Stream extends Duplex {
             case STREAM_STATES.LocalClose:
             case STREAM_STATES.RemoteClose:
             case STREAM_STATES.Closed:
-                this.emit('error', ERRORS.errStreamClosed);
+                this.emit('error', new Error(ERRORS.errStreamClosed));
                 break;
             case STREAM_STATES.Reset:
-                this.emit('error', ERRORS.errConnectionReset);
+                this.emit('error', new Error(ERRORS.errConnectionReset));
                 break;
             default:
                 if (this.sendWindow === 0) {
@@ -65,7 +65,7 @@ export class Stream extends Duplex {
                 this.sendWindow -= packetLength;
 
                 const writeTimeout = setTimeout(() => {
-                    this.emit('error', ERRORS.errConnectionWriteTimeout);
+                    this.emit('error', new Error(ERRORS.errConnectionWriteTimeout));
                     clearTimeout(writeTimeout);
                 }, this.session.config.connectionWriteTimeout * 1000);
                 this.session.push(packetToSend, encoding);
@@ -166,7 +166,7 @@ export class Stream extends Duplex {
                     break;
                 default:
                     this.session.config.logger('[ERR] yamux: unexpected FIN flag in state %d', this.state);
-                    this.emit('error', ERRORS.errUnexpectedFlag);
+                    this.emit('error', new Error(ERRORS.errUnexpectedFlag));
                     return;
             }
         }

@@ -169,7 +169,7 @@ export class Session extends Transform {
         });
 
         if (error) {
-            this.emit('error', error);
+            this.emit('error', new Error(error));
         }
         this.end();
     }
@@ -188,7 +188,7 @@ export class Session extends Transform {
         // Check if stream already exists
         if (this.streams.has(streamID)) {
             this.config.logger('[ERR] yamux: duplicate stream declared');
-            this.emit('error', ERRORS.errDuplicateStream);
+            this.emit('error', new Error(ERRORS.errDuplicateStream));
             return this.goAway(GO_AWAY_ERRORS.goAwayProtoErr);
         }
 
@@ -220,11 +220,11 @@ export class Session extends Transform {
         this.nextStreamID += 2;
 
         if (this.isClosed()) {
-            this.emit('error', ERRORS.errSessionShutdown);
+            this.emit('error', new Error(ERRORS.errSessionShutdown));
             return stream;
         }
         if (this.remoteGoAway) {
-            this.emit('error', ERRORS.errRemoteGoAway);
+            this.emit('error', new Error(ERRORS.errRemoteGoAway));
             return stream;
         }
 
@@ -252,7 +252,7 @@ export class Session extends Transform {
     // Ping is used to measure the RTT response time
     private ping() {
         if (this.shutdown) {
-            this.emit('error', ERRORS.errSessionShutdown);
+            this.emit('error', new Error(ERRORS.errSessionShutdown));
             return;
         }
         const pingID = this.pingID++;
@@ -261,7 +261,7 @@ export class Session extends Transform {
         // Wait for a response
         const responseTimeout = setTimeout(() => {
             clearTimeout(responseTimeout); // Ignore it if a response comes later.
-            this.emit('error', ERRORS.errKeepAliveTimeout);
+            this.emit('error', new Error(ERRORS.errKeepAliveTimeout));
             this.close(ERRORS.errTimeout);
         }, this.config.connectionWriteTimeout * 1000);
         this.pings.set(pingID, responseTimeout);
