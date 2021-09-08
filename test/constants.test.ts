@@ -56,19 +56,19 @@ describe('Constants', () => {
 
     describe('Errors', () => {
         it('should have the correct values', () => {
-            expect(ERRORS.errInvalidVersion).to.equal('invalid protocol version');
-            expect(ERRORS.errInvalidMsgType).to.equal('invalid msg type');
-            expect(ERRORS.errSessionShutdown).to.equal('session shutdown');
-            expect(ERRORS.errStreamsExhausted).to.equal('streams exhausted');
-            expect(ERRORS.errDuplicateStream).to.equal('duplicate stream initiated');
-            expect(ERRORS.errRecvWindowExceeded).to.equal('recv window exceeded');
-            expect(ERRORS.errTimeout).to.equal('i/o deadline reached');
-            expect(ERRORS.errStreamClosed).to.equal('stream closed');
-            expect(ERRORS.errUnexpectedFlag).to.equal('unexpected flag');
-            expect(ERRORS.errRemoteGoAway).to.equal('remote end is not accepting connections');
-            expect(ERRORS.errConnectionReset).to.equal('connection reset');
-            expect(ERRORS.errConnectionWriteTimeout).to.equal('connection write timeout');
-            expect(ERRORS.errKeepAliveTimeout).to.equal('keepalive timeout');
+            expect(ERRORS.errInvalidVersion.message).to.equal('invalid protocol version');
+            expect(ERRORS.errInvalidMsgType.message).to.equal('invalid msg type');
+            expect(ERRORS.errSessionShutdown.message).to.equal('session shutdown');
+            expect(ERRORS.errStreamsExhausted.message).to.equal('streams exhausted');
+            expect(ERRORS.errDuplicateStream.message).to.equal('duplicate stream initiated');
+            expect(ERRORS.errRecvWindowExceeded.message).to.equal('recv window exceeded');
+            expect(ERRORS.errTimeout.message).to.equal('i/o deadline reached');
+            expect(ERRORS.errStreamClosed.message).to.equal('stream closed');
+            expect(ERRORS.errUnexpectedFlag.message).to.equal('unexpected flag');
+            expect(ERRORS.errRemoteGoAway.message).to.equal('remote end is not accepting connections');
+            expect(ERRORS.errConnectionReset.message).to.equal('connection reset');
+            expect(ERRORS.errConnectionWriteTimeout.message).to.equal('connection write timeout');
+            expect(ERRORS.errKeepAliveTimeout.message).to.equal('keepalive timeout');
         });
     });
 });

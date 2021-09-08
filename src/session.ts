@@ -150,7 +150,7 @@ export class Session extends Transform {
 
     // Close is used to close the session and all streams.
     // Attempts to send a GoAway before closing the connection.
-    public close(error?: ERRORS | string) {
+    public close(error?: Error) {
         if (this.shutdown) {
             return;
         }
@@ -169,7 +169,7 @@ export class Session extends Transform {
         });
 
         if (error) {
-            this.emit('error', new Error(error));
+            this.emit('error', error);
         }
         this.end();
     }
@@ -188,7 +188,7 @@ export class Session extends Transform {
         // Check if stream already exists
         if (this.streams.has(streamID)) {
             this.config.logger('[ERR] yamux: duplicate stream declared');
-            this.emit('error', new Error(ERRORS.errDuplicateStream));
+            this.emit('error', ERRORS.errDuplicateStream);
             return this.goAway(GO_AWAY_ERRORS.goAwayProtoErr);
         }
 
@@ -220,11 +220,11 @@ export class Session extends Transform {
         this.nextStreamID += 2;
 
         if (this.isClosed()) {
-            this.emit('error', new Error(ERRORS.errSessionShutdown));
+            this.emit('error', ERRORS.errSessionShutdown);
             return stream;
         }
         if (this.remoteGoAway) {
-            this.emit('error', new Error(ERRORS.errRemoteGoAway));
+            this.emit('error', ERRORS.errRemoteGoAway);
             return stream;
         }
 
@@ -252,7 +252,7 @@ export class Session extends Transform {
     // Ping is used to measure the RTT response time
     private ping() {
         if (this.shutdown) {
-            this.emit('error', new Error(ERRORS.errSessionShutdown));
+            this.emit('error', ERRORS.errSessionShutdown);
             return;
         }
         const pingID = this.pingID++;
@@ -261,7 +261,7 @@ export class Session extends Transform {
         // Wait for a response
         const responseTimeout = setTimeout(() => {
             clearTimeout(responseTimeout); // Ignore it if a response comes later.
-            this.emit('error', new Error(ERRORS.errKeepAliveTimeout));
+            this.emit('error', ERRORS.errKeepAliveTimeout);
             this.close(ERRORS.errTimeout);
         }, this.config.connectionWriteTimeout * 1000);
         this.pings.set(pingID, responseTimeout);
@@ -293,13 +293,13 @@ export class Session extends Transform {
                 break;
             case GO_AWAY_ERRORS.goAwayProtoErr:
                 this.config.logger('[ERR] yamux: received protocol error go away');
-                return this.close('yamux protocol error');
+                return this.close(new Error('yamux protocol error'));
             case GO_AWAY_ERRORS.goAwayInternalErr:
                 this.config.logger('[ERR] yamux: received internal error go away');
-                return this.close('remote yamux internal error');
+                return this.close(new Error('remote yamux internal error'));
             default:
                 this.config.logger('[ERR] yamux: received unexpected go away');
-                return this.close('unexpected go away received');
+                return this.close(new Error('unexpected go away received'));
         }
     }
 }
