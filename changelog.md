@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.0
+
+-   Emit error objects instead of strings (https://github.com/th-ch/yamux-js/pull/5)
+
 ## 0.0.7
 
 -   Bump glob-parent (CVE-2020-28469)
