@@ -38,51 +38,51 @@ export enum GO_AWAY_ERRORS {
     goAwayInternalErr = 2,
 }
 
-export enum ERRORS {
+export const ERRORS = {
     // ErrInvalidVersion means we received a frame with an
     // invalid version
-    errInvalidVersion = 'invalid protocol version',
+    errInvalidVersion: new Error('invalid protocol version'),
 
     // ErrInvalidMsgType means we received a frame with an
     // invalid message type
-    errInvalidMsgType = 'invalid msg type',
+    errInvalidMsgType: new Error('invalid msg type'),
 
     // ErrSessionShutdown is used if there is a shutdown during
     // an operation
-    errSessionShutdown = 'session shutdown',
+    errSessionShutdown: new Error('session shutdown'),
 
     // ErrStreamsExhausted is returned if we have no more
     // stream ids to issue
     // WARNING [Difference with the Go implementation]: not used in the Node.js lib
-    errStreamsExhausted = 'streams exhausted',
+    errStreamsExhausted: new Error('streams exhausted'),
 
     // ErrDuplicateStream is used if a duplicate stream is
     // opened inbound
-    errDuplicateStream = 'duplicate stream initiated',
+    errDuplicateStream: new Error('duplicate stream initiated'),
 
     // ErrReceiveWindowExceeded indicates the window was exceeded
-    errRecvWindowExceeded = 'recv window exceeded',
+    errRecvWindowExceeded: new Error('recv window exceeded'),
 
     // ErrTimeout is used when we reach an IO deadline
-    errTimeout = 'i/o deadline reached',
+    errTimeout: new Error('i/o deadline reached'),
 
     // ErrStreamClosed is returned when using a closed stream
-    errStreamClosed = 'stream closed',
+    errStreamClosed: new Error('stream closed'),
 
     // ErrUnexpectedFlag is set when we get an unexpected flag
-    errUnexpectedFlag = 'unexpected flag',
+    errUnexpectedFlag: new Error('unexpected flag'),
 
     // ErrRemoteGoAway is used when we get a go away from the other side
-    errRemoteGoAway = 'remote end is not accepting connections',
+    errRemoteGoAway: new Error('remote end is not accepting connections'),
 
     // ErrConnectionReset is sent if a stream is reset. This can happen
     // if the backlog is exceeded, or if there was a remote GoAway.
-    errConnectionReset = 'connection reset',
+    errConnectionReset: new Error('connection reset'),
 
     // ErrConnectionWriteTimeout indicates that we hit the "safety valve"
     // timeout writing to the underlying stream connection.
-    errConnectionWriteTimeout = 'connection write timeout',
+    errConnectionWriteTimeout: new Error('connection write timeout'),
 
     // ErrKeepAliveTimeout is sent if a missed keepalive caused the stream close
-    errKeepAliveTimeout = 'keepalive timeout',
-}
+    errKeepAliveTimeout: new Error('keepalive timeout'),
+} as const;

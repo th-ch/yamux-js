@@ -56,7 +56,7 @@ describe('Server session', () => {
     it('errors if pings time out', (done) => {
         const server = new Session(false, testConfigWithKeepAlive);
         server.on('error', (err) => {
-            expect(err).to.equal('keepalive timeout');
+            expect(err.toString()).to.equal('Error: keepalive timeout');
             server.removeAllListeners('error');
             server.close();
             return done();
@@ -133,7 +133,7 @@ describe('Server session', () => {
     it('handles Go away', (done) => {
         const {server, client} = getServerAndClient(testConfig, testConfig);
         client.on('error', (err) => {
-            expect(err).to.equal('remote end is not accepting connections');
+            expect(err.toString()).to.equal('Error: remote end is not accepting connections');
             done();
         });
         server.close();
