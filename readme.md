@@ -123,3 +123,53 @@ Both `Server` and `Client` can take a custom config as last argument in their co
     logger: typeof console.log; // default: console.log
 }
 ```
+
+### Events
+
+#### Session
+* `error` fired once session level error is occured
+```ts
+import { Session, EVENTS } from 'yamux-js'
+
+export const logSessionErrors = (session: Session) => {
+    server.on(EVENTS.ERROR, (error: Error) => {
+        console.log('error is occured', error)
+    })
+}
+```
+
+#### Stream
+* `error` fired once stream level error is occured
+```ts
+import { Stream, EVENTS } from 'yamux-js'
+
+export const logStreamErrors = (stream: Stream) => {
+    server.on(EVENTS.ERROR, (error: Error) => {
+        console.log('error is occured', error)
+    })
+}
+```
+
+#### Server
+* `accept` fired once server accepted a new incoming stream
+```ts
+import { Server, Stream, EVENTS } from 'yamux-js'
+
+export const logAccepts = (server: Server) => {
+    server.on(EVENTS.ACCEPT, (stream: Stream) => {
+        console.log('new stream is accepted', stream)
+    })
+}
+```
+
+#### Client
+* `connect` fired once client opened a new stream
+```ts
+import { Client, Stream, EVENTS } from 'yamux-js'
+
+export const logConnections = (server: Client) => {
+    server.on(EVENTS.CONNECT, (stream: Stream) => {
+        console.log('new stream is opened', stream)
+    })
+}
+```

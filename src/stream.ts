@@ -1,6 +1,7 @@
 import {Duplex} from 'stream';
 
 import {STREAM_STATES, FLAGS, TYPES, initialStreamWindow, VERSION, ERRORS} from './constants';
+import {EVENTS} from './events';
 import {Header} from './header';
 import {Session} from './session';
 
@@ -35,7 +36,7 @@ export class Stream extends Duplex {
                 this.recvWindow,
                 size
             );
-            this.emit('error', ERRORS.errRecvWindowExceeded);
+            this.emit(EVENTS.ERROR, ERRORS.errRecvWindowExceeded);
         }
     }
 
@@ -44,10 +45,10 @@ export class Stream extends Duplex {
             case STREAM_STATES.LocalClose:
             case STREAM_STATES.RemoteClose:
             case STREAM_STATES.Closed:
-                this.emit('error', ERRORS.errStreamClosed);
+                this.emit(EVENTS.ERROR, ERRORS.errStreamClosed);
                 break;
             case STREAM_STATES.Reset:
-                this.emit('error', ERRORS.errConnectionReset);
+                this.emit(EVENTS.ERROR, ERRORS.errConnectionReset);
                 break;
             default:
                 if (this.sendWindow === 0) {
@@ -65,7 +66,7 @@ export class Stream extends Duplex {
                 this.sendWindow -= packetLength;
 
                 const writeTimeout = setTimeout(() => {
-                    this.emit('error', ERRORS.errConnectionWriteTimeout);
+                    this.emit(EVENTS.ERROR, ERRORS.errConnectionWriteTimeout);
                     clearTimeout(writeTimeout);
                 }, this.session.config.connectionWriteTimeout * 1000);
                 this.session.push(packetToSend, encoding);
@@ -166,7 +167,7 @@ export class Stream extends Duplex {
                     break;
                 default:
                     this.session.config.logger('[ERR] yamux: unexpected FIN flag in state %d', this.state);
-                    this.emit('error', ERRORS.errUnexpectedFlag);
+                    this.emit(EVENTS.ERROR, ERRORS.errUnexpectedFlag);
                     return;
             }
         }

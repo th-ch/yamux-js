@@ -1,6 +1,7 @@
 import {Duplex, Transform, TransformCallback} from 'stream';
 
 import {FLAGS, STREAM_STATES, TYPES, VERSION, GO_AWAY_ERRORS, ERRORS} from './constants';
+import {EVENTS} from './events';
 import {Header} from './header';
 import {Config, defaultConfig} from './mux';
 import {Stream} from './stream';
@@ -169,7 +170,7 @@ export class Session extends Transform {
         });
 
         if (error) {
-            this.emit('error', error);
+            this.emit(EVENTS.ERROR, error);
         }
         this.end();
     }
@@ -188,7 +189,7 @@ export class Session extends Transform {
         // Check if stream already exists
         if (this.streams.has(streamID)) {
             this.config.logger('[ERR] yamux: duplicate stream declared');
-            this.emit('error', ERRORS.errDuplicateStream);
+            this.emit(EVENTS.ERROR, ERRORS.errDuplicateStream);
             return this.goAway(GO_AWAY_ERRORS.goAwayProtoErr);
         }
 
@@ -202,6 +203,8 @@ export class Session extends Transform {
             const hdr = new Header(VERSION, TYPES.WindowUpdate, FLAGS.RST, streamID, 0);
             return this.send(hdr);
         }
+
+        this.emit(EVENTS.ACCEPT, stream);
 
         if (this.onStream) {
             this.onStream(stream);
@@ -220,16 +223,18 @@ export class Session extends Transform {
         this.nextStreamID += 2;
 
         if (this.isClosed()) {
-            this.emit('error', ERRORS.errSessionShutdown);
+            this.emit(EVENTS.ERROR, ERRORS.errSessionShutdown);
             return stream;
         }
         if (this.remoteGoAway) {
-            this.emit('error', ERRORS.errRemoteGoAway);
+            this.emit(EVENTS.ERROR, ERRORS.errRemoteGoAway);
             return stream;
         }
 
         this.streams.set(stream.ID(), stream);
         stream.sendWindowUpdate();
+
+        this.emit(EVENTS.CONNECT, stream);
 
         return stream;
     }
@@ -252,7 +257,7 @@ export class Session extends Transform {
     // Ping is used to measure the RTT response time
     private ping() {
         if (this.shutdown) {
-            this.emit('error', ERRORS.errSessionShutdown);
+            this.emit(EVENTS.ERROR, ERRORS.errSessionShutdown);
             return;
         }
         const pingID = this.pingID++;
@@ -261,7 +266,7 @@ export class Session extends Transform {
         // Wait for a response
         const responseTimeout = setTimeout(() => {
             clearTimeout(responseTimeout); // Ignore it if a response comes later.
-            this.emit('error', ERRORS.errKeepAliveTimeout);
+            this.emit(EVENTS.ERROR, ERRORS.errKeepAliveTimeout);
             this.close(ERRORS.errTimeout);
         }, this.config.connectionWriteTimeout * 1000);
         this.pings.set(pingID, responseTimeout);

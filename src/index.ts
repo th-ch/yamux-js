@@ -3,4 +3,5 @@ import {Config} from './mux';
 import {Server} from './server';
 import {Stream} from './stream';
 
+export * from './events';
 export {Config, Client, Server, Stream};
