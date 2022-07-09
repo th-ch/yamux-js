@@ -124,9 +124,9 @@ Both `Server` and `Client` can take a custom config as last argument in their co
 }
 ```
 
-### Events
+## Events
 
-#### Session
+### Session
 * events inherited from [Transform](https://nodejs.org/api/stream.html#duplex-and-transform-streams) class
 * `error` fired once session level error is occured
 ```ts
@@ -139,7 +139,7 @@ export const logSessionErrors = (session: Session) => {
 }
 ```
 
-#### Stream
+### Stream
 * events inherited from [Duplex](https://nodejs.org/api/stream.html#duplex-and-transform-streams) class
 * `error` fired once stream level error is occured
 ```ts
@@ -152,7 +152,7 @@ export const logStreamErrors = (stream: Stream) => {
 }
 ```
 
-#### Server
+### Server
 * events inherited from [Session](#session) class
 * `accept` fired once server accepted a new incoming stream
 ```ts
@@ -165,7 +165,7 @@ export const logAccepts = (server: Server) => {
 }
 ```
 
-#### Client
+### Client
 * events inherited from [Session](#session) class
 * `connect` fired once client opened a new stream
 ```ts
