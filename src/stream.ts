@@ -115,6 +115,12 @@ export class Stream extends Duplex {
         this.session.send(this.controlHdr);
     }
 
+    public updateRecvWindow(receivedSize: number) {
+        this.recvWindow -= receivedSize;
+
+        this.sendWindowUpdate();
+    }
+
     // sendClose is used to send a FIN
     private sendClose() {
         const flags = FLAGS.FIN;
