@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.1
+
+-   Add support for receive window update (https://github.com/th-ch/yamux-js/pull/10)
+
 ## 0.1.0
 
 -   Emit error objects instead of strings (https://github.com/th-ch/yamux-js/pull/5)
