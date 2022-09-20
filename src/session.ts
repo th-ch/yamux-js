@@ -138,6 +138,7 @@ export class Session extends Transform {
         }
 
         stream.push(fullPacket, encoding);
+        stream.updateRecvWindow(fullPacket.length);
     }
 
     public closeStream(streamID: number) {

@@ -2,7 +2,7 @@ import {Duplex} from 'stream';
 
 import {expect} from 'chai';
 
-import {FLAGS, TYPES, VERSION} from '../src/constants';
+import {FLAGS, TYPES, VERSION, initialStreamWindow} from '../src/constants';
 import {Header} from '../src/header';
 import {Session} from '../src/session';
 import {defaultConfig} from '../src/mux';
@@ -128,6 +128,62 @@ describe('Server session', () => {
             // Send the message and wait to get it back
             stream!.write(message);
         }
+    });
+
+    it('updates the receive window', (done) => {
+        const expectedOutput = new Set();
+
+        const {client, server} = getServerAndClient(testConfig, testConfig, (stream) => {
+            stream.on('data', (data) => {
+                const received = data.toString();
+                expect(expectedOutput.has(received)).to.be.true;
+                // Send it back
+                stream.write(received);
+            });
+        });
+
+
+        const message = Buffer.alloc(1024).fill(0x42);
+        expectedOutput.add(message.toString());
+
+        const stream = client.open();
+        expect(stream).to.not.be.undefined;
+
+        stream.on('data', (data) => {
+            expect(stream['recvWindow']).to.equal(initialStreamWindow - 1024)
+            done();
+        });
+
+        // Send the message and wait to get it back
+        stream.write(message);
+    });
+
+    it('updates the receive window - and resets it when needed', (done) => {
+        const expectedOutput = new Set();
+
+        const {client, server} = getServerAndClient(testConfig, testConfig, (stream) => {
+            stream.on('data', (data) => {
+                const received = data.toString();
+                expect(expectedOutput.has(received)).to.be.true;
+                // Send it back
+                stream.write(received);
+            });
+        });
+
+
+        const message = Buffer.alloc(200 * 1024).fill(0x42);
+        expectedOutput.add(message.toString());
+
+        const stream = client.open();
+        expect(stream).to.not.be.undefined;
+
+        stream.on('data', (data) => {
+            expect(stream['recvWindow']).to.equal(initialStreamWindow)
+            done();
+        });
+
+        // Send the message and wait to get it back
+        stream.write(message);
     });
 
     it('handles Go away', (done) => {
