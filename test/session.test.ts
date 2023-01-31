@@ -234,30 +234,47 @@ describe('Server session', () => {
     });
 
     it('handles correctly window updates', (done) => {
-        let hasReceivedMessageBeforeWindowUpdate = false;
-
         const {client} = getServerAndClient(testConfig, testConfig, (stream) => {
-            stream.on('data', (data) => {
-                const received = data.toString();
-
-                if (!hasReceivedMessageBeforeWindowUpdate) {
-                    expect(received).to.equal('Data before window update');
-                    hasReceivedMessageBeforeWindowUpdate = true;
-                } else {
-                    expect(received).to.equal('Data after window update');
-                    done();
-                }
-            });
+            // Write back the data
+            stream.on('data', stream.write);
         });
 
+        let hasReceivedMessageBeforeWindowUpdate = false;
+
         const stream = client.open();
+        stream.on('data', (data) => {
+            const received = data.toString();
+
+            if (!hasReceivedMessageBeforeWindowUpdate) {
+                expect(received).to.equal('Data before window update');
+                hasReceivedMessageBeforeWindowUpdate = true;
+            } else {
+                expect(received).to.equal('Data after window update');
+            }
+        });
+
         stream.write('Data before window update');
+
+        const stream2 = client.open();
+        stream2.on('data', (data) => {
+            const received = data.toString();
+            expect(received).to.equal('unrelated data');
+            done();
+        });
+
+        const dataWithHeader = (streamID: number, data: string) =>
+            Buffer.concat([new Header(VERSION, TYPES.Data, 0, streamID, data.length).encode(), Buffer.from(data)]);
 
         // Update the window (size += 1)
         const hdr = new Header(VERSION, TYPES.WindowUpdate, FLAGS.ACK, stream.ID(), 1);
-        client.send(hdr);
-
-        stream.write('Data after window update');
+        // Send additional data along with the window update, for both streams
+        client.send(
+            hdr,
+            Buffer.concat([
+                dataWithHeader(stream.ID(), 'Data after window update'),
+                dataWithHeader(stream2.ID(), 'unrelated data'),
+            ])
+        );
     });
 });
 
