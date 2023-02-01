@@ -91,6 +91,8 @@ server.on('error', (err) => {
 server.pipe(commonXXXChannel).pipe(server);
 ```
 
+> _See also a [full example with `net.createServer`](https://github.com/th-ch/yamux-js/issues/13#issuecomment-1410279418)_
+
 ### Configuration
 
 Both `Server` and `Client` can take a custom config as last argument in their constructor:
