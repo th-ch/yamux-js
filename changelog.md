@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.2
+
+-   Fix issue when there is data right after a window update (https://github.com/th-ch/yamux-js/pull/14)
+
 ## 0.1.1
 
 -   Add support for receive window update (https://github.com/th-ch/yamux-js/pull/10)
