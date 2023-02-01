@@ -92,6 +92,9 @@ export class Session extends Transform {
             case TYPES.WindowUpdate:
                 this.handleStreamMessage(this.currentHeader, packet, encoding);
                 this.currentHeader = undefined;
+                if (packet.length > 0) {
+                    return this._transform(packet, encoding, cb);
+                }
                 break;
             case TYPES.Ping:
                 this.handlePing(this.currentHeader);
@@ -135,6 +138,7 @@ export class Session extends Transform {
         // Check if this is a window update
         if (currentHeader.type === TYPES.WindowUpdate) {
             stream.incrSendWindow(currentHeader);
+            return;
         }
 
         stream.push(fullPacket, encoding);
