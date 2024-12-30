@@ -15,7 +15,7 @@
         "mocha": "^9.2.2",
         "prettier": "^2.1.2",
         "ts-node": "^10.9.2",
-        "typescript": "^4.0.3"
+        "typescript": "^5.7.2"
     },
     "scripts": {
         "build": "yarn clean && tsc",
