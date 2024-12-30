@@ -1247,12 +1247,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.1.2":
-  version: 2.1.2
-  resolution: "prettier@npm:2.1.2"
+"prettier@npm:^3.4.2":
+  version: 3.4.2
+  resolution: "prettier@npm:3.4.2"
   bin:
-    prettier: bin-prettier.js
-  checksum: 10c0/92f416eeaf81ce97e4d6f700051fba3a1903fc90adbd06610a71676ad1cd79db77606546541fe8ff7fb9c060b62fd5335b1f3a86f92ffd46eb664e234c1a54d4
+    prettier: bin/prettier.cjs
+  checksum: 10c0/99e076a26ed0aba4ebc043880d0f08bbb8c59a4c6641cdee6cdadf2205bdd87aa1d7823f50c3aea41e015e99878d37c58d7b5f0e663bba0ef047f94e36b96446
   languageName: node
   linkType: hard
 
@@ -1681,7 +1681,7 @@ __metadata:
     "@types/node": "npm:^14.11.8"
     chai: "npm:^4.4.1"
     mocha: "npm:^9.2.2"
-    prettier: "npm:^2.1.2"
+    prettier: "npm:^3.4.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.7.2"
   languageName: unknown
