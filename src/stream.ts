@@ -82,7 +82,7 @@ export class Stream extends Duplex {
     }
 
     private sendFlags() {
-        let flags: FLAGS = 0;
+        let flags: FLAGS | number = 0;
 
         switch (this.state) {
             case STREAM_STATES.Init:
