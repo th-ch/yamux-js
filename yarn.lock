@@ -132,10 +132,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.11.8":
-  version: 14.11.10
-  resolution: "@types/node@npm:14.11.10"
-  checksum: 10c0/c7d756289be2637de036383591108d0f488b377d64d5d571c3fa9d3291724279e831d1845a2d1f754f2ecdceb7d453b63484dac86173113d7a5825f5b9c66663
+"@types/node@npm:^22.10.2":
+  version: 22.10.2
+  resolution: "@types/node@npm:22.10.2"
+  dependencies:
+    undici-types: "npm:~6.20.0"
+  checksum: 10c0/2c7b71a040f1ef5320938eca8ebc946e6905caa9bbf3d5665d9b3774a8d15ea9fab1582b849a6d28c7fc80756a62c5666bc66b69f42f4d5dafd1ccb193cdb4ac
   languageName: node
   linkType: hard
 
@@ -1568,6 +1570,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~6.20.0":
+  version: 6.20.0
+  resolution: "undici-types@npm:6.20.0"
+  checksum: 10c0/68e659a98898d6a836a9a59e6adf14a5d799707f5ea629433e025ac90d239f75e408e2e5ff086afc3cace26f8b26ee52155293564593fbb4a2f666af57fc59bf
+  languageName: node
+  linkType: hard
+
 "unique-filename@npm:^4.0.0":
   version: 4.0.0
   resolution: "unique-filename@npm:4.0.0"
@@ -1678,7 +1687,7 @@ __metadata:
   dependencies:
     "@types/chai": "npm:^4.3.11"
     "@types/mocha": "npm:^9.1.0"
-    "@types/node": "npm:^14.11.8"
+    "@types/node": "npm:^22.10.2"
     chai: "npm:^4.4.1"
     mocha: "npm:^9.2.2"
     prettier: "npm:^3.4.2"
