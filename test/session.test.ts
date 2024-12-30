@@ -35,11 +35,11 @@ describe('Server session', () => {
         const server = new Session(false, testConfigWithKeepAlive);
         const expectedPings = [
             // first ping
-            Buffer.from(['00', '02', '00', '01', '00', '00', '00', '00', '00', '00', '00', '00']),
+            Buffer.from([0x0, 0x2, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0]),
             // second ping
-            Buffer.from(['00', '02', '00', '01', '00', '00', '00', '00', '00', '00', '00', '01']),
+            Buffer.from([0x0, 0x2, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1]),
             // Third ping
-            Buffer.from(['00', '02', '00', '01', '00', '00', '00', '00', '00', '00', '00', '02']),
+            Buffer.from([0x0, 0x2, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x2]),
         ];
 
         server.on('data', (data) => {

@@ -25,7 +25,7 @@ describe('Stream', () => {
             expect(
                 Buffer.compare(
                     data,
-                    Buffer.from(['00', '01', '00', '01', '00', '00', '00', '00', '00', '00', '00', '00'])
+                    Buffer.from([0x0, 0x1, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0])
                 )
             ).to.equal(0);
             session.removeAllListeners('data');
@@ -42,7 +42,7 @@ describe('Stream', () => {
             expect(
                 Buffer.compare(
                     data,
-                    Buffer.from(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '01', 'ff'])
+                    Buffer.from([0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0xff])
                 )
             ).to.equal(0);
             expect(stream['sendWindow']).to.equal(0)
@@ -50,7 +50,7 @@ describe('Stream', () => {
             session.close();
             done();
         });
-        stream.write(Buffer.from(['ff']), () => stream.close());
+        stream.write(Buffer.from([0xff]), () => stream.close());
     });
 
     it('waits for a window update if send window is empty', (done) => {
@@ -61,7 +61,7 @@ describe('Stream', () => {
             expect(
                 Buffer.compare(
                     data,
-                    Buffer.from(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '01', 'ff'])
+                    Buffer.from([0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0xff])
                 )
             ).to.equal(0);
             expect(stream['sendWindow']).to.equal(0)
@@ -70,7 +70,7 @@ describe('Stream', () => {
             session.close();
             done();
         });
-        stream.write(Buffer.from(['ff']), () => stream.close());
+        stream.write(Buffer.from([0xff]), () => stream.close());
         const hdr = new Header(VERSION, TYPES.WindowUpdate, 0, stream.ID(), 1);
         setTimeout(() => stream.incrSendWindow(hdr), 50)
     });
@@ -82,13 +82,13 @@ describe('Stream', () => {
         session.on('data', (data) => {
             if (data[1] === 0) { // packet is of type Data
                 numberOfDataPackets++
-                expect(Buffer.compare(data, Buffer.from(['00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '01', 'ff']))).to.equal(0);
+                expect(Buffer.compare(data, Buffer.from([0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1, 0xff]))).to.equal(0);
                 expect(stream['sendWindow']).to.equal(0)
                 const hdr = new Header(VERSION, TYPES.WindowUpdate, 0, stream.ID(), 1);
                 stream.incrSendWindow(hdr)
             }
         });
-        stream.write(Buffer.from(['ff', 'ff']), () => {
+        stream.write(Buffer.from([0xff, 0xff]), () => {
             expect(numberOfDataPackets).to.equal(2)
             stream.close();
             session.removeAllListeners('data');
@@ -104,7 +104,7 @@ describe('Stream', () => {
             expect(
                 Buffer.compare(
                     data,
-                    Buffer.from(['00', '01', '00', '04', '00', '00', '00', '00', '00', '00', '00', '00'])
+                    Buffer.from([0x00, 0x01, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
                 )
             ).to.equal(0);
             session.removeAllListeners('data');
@@ -120,7 +120,7 @@ describe('Stream', () => {
             expect(
                 Buffer.compare(
                     data,
-                    Buffer.from(['00', '01', '00', '04', '00', '00', '00', '00', '00', '00', '00', '00'])
+                    Buffer.from([0x00, 0x01, 0x00, 0x4, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0])
                 )
             ).to.equal(0);
             session.removeAllListeners('data');
