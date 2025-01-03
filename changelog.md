@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.2.0
+
+-   Update dependencies (https://github.com/th-ch/yamux-js/pull/18)
+-   Fix stream close method (https://github.com/th-ch/yamux-js/pull/20)
+
 ## 0.1.2
 
 -   Fix issue when there is data right after a window update (https://github.com/th-ch/yamux-js/pull/14)
