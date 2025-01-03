@@ -138,12 +138,14 @@ export class Stream extends Duplex {
             case STREAM_STATES.Established:
                 this.state = STREAM_STATES.LocalClose;
                 this.sendClose();
+                break;
 
             case STREAM_STATES.LocalClose:
             case STREAM_STATES.RemoteClose:
                 this.state = STREAM_STATES.LocalClose;
                 this.sendClose();
                 this.session.closeStream(this.id);
+                break;
         }
     }
 

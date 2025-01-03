@@ -6,10 +6,10 @@ import {Config, defaultConfig} from './mux';
 import {Stream} from './stream';
 
 export class Session extends Transform {
-    // localGoAway indicates that we should stop accepting futher connections
+    // localGoAway indicates that we should stop accepting further connections
     private localGoaway = false;
 
-    // remoteGoAway indicates the remote side does not want futher connections.
+    // remoteGoAway indicates the remote side does not want further connections.
     private remoteGoAway = false;
 
     // nextStreamID is the next stream we should send. This depends if we are a client/server.
