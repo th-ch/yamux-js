@@ -9,7 +9,7 @@ describe('Header', () => {
     });
 
     it('can parse and re-encode an encoded header', () => {
-        const encodedHeader = Buffer.from(['00', '02', '00', '01', '00', '00', '00', '00', '00', '00', '00', '07']);
+        const encodedHeader = Buffer.from([0x0, 0x2, 0x0, 0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7]);
         const header = Header.parse(encodedHeader);
 
         expect(header.version).to.equal(VERSION);
