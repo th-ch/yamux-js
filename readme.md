@@ -52,9 +52,6 @@ client.on('error', (err) => {
 client.pipe(commonXXXChannel).pipe(client);
 
 var stream1 = client.open();
-stream1.on('end', () => {
-    console.log('client disconnected');
-});
 stream1.on('data', (data) => {
     console.log('recv:', data.toString());
 });
@@ -73,9 +70,6 @@ var stream2 = client.open();
 var {Server} = require('yamux-js');
 
 var server = new Server((stream) => {
-    stream.on('end', () => {
-        console.log('client disconnected');
-    });
     stream.on('data', (data) => {
         console.log('recv:', data.toString());
         stream.write('Sending back data');
