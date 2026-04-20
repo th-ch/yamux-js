@@ -161,12 +161,13 @@ export class Stream extends Duplex {
                 this.state = STREAM_STATES.Established;
             }
         }
-        if (flags === FLAGS.SYN) {
+        if (flags === FLAGS.FIN) {
             switch (this.state) {
                 case STREAM_STATES.SYNSent:
                 case STREAM_STATES.SYNReceived:
                 case STREAM_STATES.Established:
                     this.state = STREAM_STATES.RemoteClose;
+                    this.push(null);
                     break;
                 case STREAM_STATES.LocalClose:
                     this.state = STREAM_STATES.Closed;
