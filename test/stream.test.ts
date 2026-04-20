@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 
-import {STREAM_STATES, TYPES, VERSION} from '../src/constants';
+import {FLAGS, STREAM_STATES, TYPES, VERSION} from '../src/constants';
 import {Header} from '../src/header';
 import {Session} from '../src/session';
 import {Stream} from '../src/stream';
@@ -128,5 +128,19 @@ describe('Stream', () => {
             done();
         });
         stream.close();
+    });
+
+    it('transitions to remote close and ends the readable side on FIN', (done) => {
+        const {stream, session} = createStream(0, STREAM_STATES.Established);
+        const hdr = new Header(VERSION, TYPES.WindowUpdate, FLAGS.FIN, stream.ID(), 0);
+
+        stream.on('end', () => {
+            expect(stream['state']).to.equal(STREAM_STATES.RemoteClose);
+            session.close();
+            done();
+        });
+
+        stream.resume();
+        stream.incrSendWindow(hdr);
     });
 });
