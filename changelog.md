@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+-   Fix: handle FIN flag correctly in processFlags (https://github.com/th-ch/yamux-js/pull/21)
+
 ## 0.2.0
 
 -   Update dependencies (https://github.com/th-ch/yamux-js/pull/18)
