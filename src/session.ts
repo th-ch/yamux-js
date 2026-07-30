@@ -30,12 +30,12 @@ export class Session extends Transform {
     private shutdown = false;
 
     // Callback when a steam had been created
-    protected onStream?: (duplex: Duplex) => void;
+    protected onStream?: (stream: Stream) => void;
 
     // Current header from data received
     private currentHeader?: Header;
 
-    constructor(client: boolean, config?: Config, onStream?: (duplex: Duplex) => void) {
+    constructor(client: boolean, config?: Config, onStream?: (stream: Stream) => void) {
         super();
         if (client) {
             this.nextStreamID = 1;
